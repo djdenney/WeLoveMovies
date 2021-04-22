@@ -1,5 +1,5 @@
-const mapProperties = require('../utils/map-properties')
 const knex = require('../db/connection')
+const mapProperties = require('../utils/map-properties')
 
 function addCritic(movies) {
     return movies.map((movie) => {
@@ -23,15 +23,19 @@ function addCritic(movies) {
     })
 }
 
-function list(isShowing = false) {
-    if (isShowing) {
-        return knex('movies')
-            .join('movies_theaters', 'movies.movie_id', 'movies_theaters.movie_id')
-            .select('*')
-            .where({ 'movies_theaters.is_showing': true })
-    }
+
+function list() {
     return knex('movies')
-        .select()
+        .select('*')
+        .groupBy('movies.movie_id')
+}
+
+function listShowing() {
+    return knex('movies')
+        .join('movies_theaters', 'movies.movie_id', 'movies_theaters.movie_id')
+        .select('movies.*')
+        .where({ 'movies_theaters.is_showing': true })
+        .groupBy('movies.movie_id')
 }
 
 function listTheaters() {
@@ -43,6 +47,7 @@ function listTheaters() {
 }
 
 function listReviews(movieId) {
+    console.log(movieId)
     return knex('movies')
         .join('reviews', 'movies.movie_id', 'reviews.movie_id')
         .join('critics', 'reviews.critic_id', 'critics.critic_id')
@@ -69,6 +74,7 @@ function read(movie_id) {
 
 module.exports = {
     list,
+    listShowing,
     read,
     listTheaters,
     listReviews
