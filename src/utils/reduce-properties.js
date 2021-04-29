@@ -21,14 +21,12 @@ const mapProperties = require("./map-properties");
  *  returns { "movie_id": ["movies", "4", "movie_id"] }
  */
 function getRowMapConfiguration(configuration, previousRow) {
-  return Object.entries(configuration).reduce((accumulator, [key, values]) => {
-    accumulator[key] = values.map((value, index, source) =>
-      value === null
-        ? lodash.get(previousRow, `${source[index - 1]}.length`, 0)
-        : value
-    );
-    return accumulator;
-  }, {});
+    return Object.entries(configuration).reduce((accumulator, [key, values]) => {
+        accumulator[key] = values.map((value, index, source) =>
+            value === null ? lodash.get(previousRow, `${source[index - 1]}.length`, 0) : value
+        );
+        return accumulator;
+    }, {});
 }
 
 /**
@@ -43,23 +41,23 @@ function getRowMapConfiguration(configuration, previousRow) {
  *  a function that accepts an array and when called returns an array with one element for each unique field value.
  */
 function reduceProperties(uniqueField, configuration) {
-  return (data) => {
-    const reducedData = data.reduce((accumulator, row) => {
-      const key = row[uniqueField];
-      const rowObject = accumulator[key] || {};
+    return (data) => {
+        const reducedData = data.reduce((accumulator, row) => {
+            const key = row[uniqueField];
+            const rowObject = accumulator[key] || {};
 
-      const rowMapConfiguration = getRowMapConfiguration(
-        configuration,
-        rowObject
-      );
+            const rowMapConfiguration = getRowMapConfiguration(
+                configuration,
+                rowObject
+            );
 
-      const rowMapper = mapProperties(rowMapConfiguration);
-      accumulator[key] = lodash.merge(rowObject, rowMapper(row));
-      return accumulator;
-    }, {});
+            const rowMapper = mapProperties(rowMapConfiguration);
+            accumulator[key] = lodash.merge(rowObject, rowMapper(row));
+            return accumulator;
+        }, {});
 
-    return Object.values(reducedData);
-  };
+        return Object.values(reducedData);
+    };
 }
 
 module.exports = reduceProperties;
