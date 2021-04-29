@@ -14,10 +14,16 @@ The project backend itself can be tested using its deployment located on vercel/
 using the following paths:
 
 /movies *GET all movie data*
+
 /movies?is_showing=true *GET all movies currently showing*
+
 /movies/:movieId (1, 2, 3, etc.) *GET data for a specific movie, identified by id*
+
 /movies/:movieId/theaters *GET which theaters are currently showing this movie*
+
 /movie/:movieId/reviews *GET reviews for selected movie*
+
 /reviews/:reviewId (1, 2, 3, etc.) *DELETE or UPDATE the content of 1 review*
+
 /theaters *GET all theaters and movies playing at each theater*
 
