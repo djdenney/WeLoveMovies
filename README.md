@@ -21,7 +21,7 @@ using the following paths:
 
 /movies/:movieId/theaters *GET which theaters are currently showing this movie*
 
-/movie/:movieId/reviews *GET reviews for selected movie*
+/movies/:movieId/reviews *GET reviews for selected movie*
 
 /reviews/:reviewId (1, 2, 3, etc.) *DELETE or UPDATE the content of 1 review*
 
