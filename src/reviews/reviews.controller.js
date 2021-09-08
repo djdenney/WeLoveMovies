@@ -14,7 +14,7 @@ async function reviewExists(req, res, next) {
 
 async function destroy(req, res, next) {
     await service.destroy(res.locals.review.review_id);
-    res.sendStatus(204);
+    res.sendStatus(204).end();
 }
 
 async function update(req, res, next) {
@@ -34,7 +34,7 @@ async function read(req, res, next) {
     const updatedReview = res.locals.review;
     const reviewId = updatedReview.review_id;
     const review = await service.readWithCritic(reviewId);
-    res.json({ data: review[0] });
+    res.json({ data: review[0] }).end();
 }
 
 module.exports = {

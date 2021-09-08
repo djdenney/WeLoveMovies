@@ -4,25 +4,25 @@ const asyncErrorBoundary = require("../errors/asyncErrorBoundary");
 async function list(req, res, next) {
     const isShowing = req.query.is_showing;
     if (isShowing) {
-        res.json({ data: await service.listShowing() });
+        res.json({ data: await service.listShowing() }).end();
     } else {
-        res.json({ data: await service.list() });
+        res.json({ data: await service.list() }).end();
     }
 }
 
 async function listTheaters(req, res, next) {
     const movieId = req.params.movieId;
-    res.json({ data: await service.listTheaters(movieId) });
+    res.json({ data: await service.listTheaters(movieId) }).end();
 }
 
 async function listReviews(req, res, next) {
     const movieId = req.params.movieId;
     const result = await service.listReviews(movieId);
-    res.json({ data: result });
+    res.json({ data: result }).end();
 }
 
 async function read(req, res, next) {
-    res.json({ data: res.locals.movie });
+    res.json({ data: res.locals.movie }).end();
 }
 
 async function movieExists(req, res, next) {
