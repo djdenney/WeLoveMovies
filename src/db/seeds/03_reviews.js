@@ -23,25 +23,25 @@ transitus quam longius aenea, concussaque hoc mille.
 Ut erat. Tibi Themin corpore saepes.`;
 
 const generateReviews = (criticIds, movieIds) => {
-  return movieIds
-    .map(({ movie_id }) => {
-      return criticIds.map(({ critic_id }) => {
-        return {
-          content,
-          score: Math.ceil(Math.random() * 5),
-          critic_id,
-          movie_id,
-        };
-      });
-    })
-    .reduce((a, b) => a.concat(b), [])
-    .filter((reviews) => reviews.content);
+    return movieIds
+        .map(({ movie_id }) => {
+            return criticIds.map(({ critic_id }) => {
+                return {
+                    content,
+                    score: Math.ceil(Math.random() * 5),
+                    critic_id,
+                    movie_id,
+                };
+            });
+        })
+        .reduce((a, b) => a.concat(b), [])
+        .filter((reviews) => reviews.content);
 };
 
 exports.seed = async function (knex) {
-  const criticIds = await knex("critics").select("critic_id");
-  const movieIds = await knex("movies").select("movie_id");
+    const criticIds = await knex("critics").select("critic_id");
+    const movieIds = await knex("movies").select("movie_id");
 
-  const reviews = generateReviews(criticIds, movieIds);
-  return knex("reviews").insert(reviews);
+    const reviews = generateReviews(criticIds, movieIds);
+    return knex("reviews").insert(reviews);
 };
